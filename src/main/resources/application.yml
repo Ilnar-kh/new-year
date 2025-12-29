@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: dedmoroz-bot
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/dedmoroz}
+    username: ${DB_USER:dedmoroz}
+    password: ${DB_PASSWORD:dedmoroz}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: false
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+telegram:
+  bot:
+    token: ${TG_BOT_TOKEN}
+    username: ${TG_BOT_USERNAME}
+    sample-video-file-id: ${TG_SAMPLE_VIDEO_FILE_ID:}
+    sample-video-url: ${TG_SAMPLE_VIDEO_URL:https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4}
+
+payment:
+  yookassa:
+    shop-id: ${YOOKASSA_SHOP_ID}
+    secret-key: ${YOOKASSA_SECRET_KEY}
+    return-url: ${YOOKASSA_RETURN_URL:https://t.me/}
+    webhook-secret: ${YOOKASSA_WEBHOOK_SECRET}
+
+fal:
+  api-key: ${FAL_API_KEY}
+  model: ${FAL_MODEL:fal-ai/placeholder-model}
+  poll-delay-ms: 4000
+  timeout-seconds: 240
+
+app:
+  base-url: ${APP_BASE_URL:http://localhost:8080}
+  price-rub: 99
+
+logging:
+  level:
+    com.example.dedmoroz: INFO
