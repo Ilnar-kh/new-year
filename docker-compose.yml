@@ -1,0 +1,38 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: dedmoroz
+      POSTGRES_PASSWORD: dedmoroz
+      POSTGRES_DB: dedmoroz
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "dedmoroz"]
+      interval: 5s
+      retries: 5
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/dedmoroz
+      DB_USER: dedmoroz
+      DB_PASSWORD: dedmoroz
+      TG_BOT_TOKEN: ${TG_BOT_TOKEN}
+      TG_BOT_USERNAME: ${TG_BOT_USERNAME}
+      TG_SAMPLE_VIDEO_FILE_ID: ${TG_SAMPLE_VIDEO_FILE_ID}
+      TG_SAMPLE_VIDEO_URL: ${TG_SAMPLE_VIDEO_URL}
+      YOOKASSA_SHOP_ID: ${YOOKASSA_SHOP_ID}
+      YOOKASSA_SECRET_KEY: ${YOOKASSA_SECRET_KEY}
+      YOOKASSA_RETURN_URL: ${YOOKASSA_RETURN_URL}
+      YOOKASSA_WEBHOOK_SECRET: ${YOOKASSA_WEBHOOK_SECRET}
+      FAL_API_KEY: ${FAL_API_KEY}
+      FAL_MODEL: ${FAL_MODEL}
+      APP_BASE_URL: ${APP_BASE_URL}
+    ports:
+      - "8080:8080"
+volumes:
+  db-data:
